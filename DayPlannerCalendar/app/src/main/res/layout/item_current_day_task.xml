@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/shape_item_backgroud">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/aciv_task_mark"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_circle_task_expire" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/actv_task_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/aciv_task_mark"
+        android:drawablePadding="6dp"
+        android:textColor="#1B1C1F"
+        android:textSize="16sp"
+        tools:text="吃早餐" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/actv_task_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actv_task_title"
+        android:layout_marginStart="6dp"
+        android:layout_toRightOf="@+id/aciv_task_mark"
+        android:includeFontPadding="true"
+        android:textColor="#656A72"
+        android:textSize="14sp"
+        tools:text="10:00 AM" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/actv_task_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actv_task_time"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/aciv_task_mark"
+        android:includeFontPadding="true"
+        android:textColor="#656A72"
+        android:textSize="14sp"
+        android:lines="1"
+        android:ellipsize="end"
+        tools:text="吃面包吐司和牛奶吃面包吐司和牛奶吃面包吐司和牛奶吃面包吐司和牛奶" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/actv_delete_task"
+        android:layout_width="64dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shape_delete_task"
+        android:gravity="center"
+        android:text="@string/delete_task"
+        android:textColor="#50ABF0"
+        android:layout_marginEnd="10dp"/>
+
+
+</RelativeLayout>

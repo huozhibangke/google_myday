@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="254dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/bg_home_top"
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llc_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/view_status"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aciv_title_left"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_menu_switch" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/select_year"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_menu_right" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aciv_pre_date"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="6dp"
+                app:srcCompat="@drawable/ic_pre_month"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/actv_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="十一月"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/actv_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aciv_next_date"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="6dp"
+                app:srcCompat="@drawable/ic_next_month"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"/>
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_shape_home_calendar"
+            >
+
+            <com.manage.calendar.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                app:calendar_match_parent="true"
+                app:current_month_text_color="#333333"
+                app:day_text_size="14sp"
+                app:max_year="2024"
+                app:min_year="2004"
+                app:month_view="com.manage.calendar.widget.FullMonthView"
+                app:month_view_show_mode="mode_all"
+                app:other_month_text_color="#e1e1e1"
+                app:scheme_text_color="#333"
+                app:scheme_theme_color="#128c4b"
+                app:selected_text_color="#333"
+                app:selected_theme_color="#cfcfcf"
+                app:week_background="#fff"
+                app:week_start_with="sun"
+                app:week_text_color="#5F5F5F"
+                app:week_view="com.manage.calendar.widget.FullWeekView"
+                app:year_view_day_text_color="#333333"
+                app:year_view_day_text_size="7sp"
+                app:year_view_month_text_color="#ff0000"
+                app:year_view_month_text_size="20sp"
+                app:year_view_scheme_color="#f17706"
+                app:year_view_select_text_color="#fff"
+                app:year_view_week_height="12dp"
+                app:year_view_week_text_color="#e1e1e1"
+                app:year_view_week_text_size="6sp"
+                android:layout_marginBottom="30dp"/>
+
+        </FrameLayout>
+
+
+
+<!--            app:year_view="com.haibin.calendarviewproject.custom.CustomYearView"-->
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/add_schedule"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        app:srcCompat="@drawable/ic_home_add_schedule"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"/>
+
+</FrameLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_root"
+    android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_app_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="@color/color_333333"
+        android:textSize="14sp"
+        android:layout_marginStart="6dp"
+        app:layout_constraintTop_toTopOf="@+id/iv_app_image"
+        app:layout_constraintStart_toEndOf="@+id/iv_app_image"
+        app:layout_constraintBottom_toTopOf="@+id/tv_app_version" />
+
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version：3.4.0"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_app_image" />
+
+    <ImageView
+        android:id="@+id/cb_select_memory"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_local_unchecked"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_app_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.0"
+        android:textColor="@color/color_999999"
+        android:textSize="13sp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toTopOf="@+id/cb_select_memory"
+        app:layout_constraintEnd_toStartOf="@+id/cb_select_memory"
+        app:layout_constraintBottom_toBottomOf="@+id/cb_select_memory" />
+
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="10dp"-->
+<!--            android:background="@color/transparent"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

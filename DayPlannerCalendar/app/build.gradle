@@ -1,0 +1,151 @@
+plugins {
+    id 'com.android.application'
+}
+
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.huntparadise.huse"
+        minSdk 23
+        targetSdk 33
+        versionCode 101
+        versionName "1.0.1"
+        multiDexEnabled true
+        //kp
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+        resValue "string", "package_name", "$applicationId"
+
+        flavorDimensions "product"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true"
+                ]
+            }
+        }
+
+    }
+
+    signingConfigs {
+        calendar {
+            keyAlias "key0"
+            keyPassword "calendar123"
+            storePassword "calendar123"
+            storeFile file('../calendar.jks')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'agreementPrivacy', '"https://docs.google.com/document/d/1BkWeec8YPPqpP-2Z2udjyWINzye9KkkRYPB0gOxjk3Q/edit?usp=sharing"')
+            signingConfig signingConfigs.calendar
+        }
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'agreementPrivacy', '"https://docs.google.com/document/d/1BkWeec8YPPqpP-2Z2udjyWINzye9KkkRYPB0gOxjk3Q/edit?usp=sharing"')
+        }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "$applicationId." + "$versionName" + ".apk"
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    productFlavors {
+        calendar {
+            dimension "product"
+            applicationId "com.huntparadise.huse"
+            versionCode 101
+            versionName "1.0.1"
+            signingConfig signingConfigs.calendar
+        }
+    }
+    task intoJar(type: Copy) {
+        delete 'build/libs/CalendarView.jar'
+        from('build/intermediates/bundles/release/')
+        into('build/libs/')
+        include('classes.jar')
+        rename ('classes.jar', 'CalendarView.jar')
+    }
+    intoJar.dependsOn(build)
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.4'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.tencent:mmkv:1.2.13'
+    implementation 'com.alibaba:fastjson:1.2.69'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'com.uber.autodispose2:autodispose:2.1.1'
+    implementation 'com.uber.autodispose2:autodispose-lifecycle:2.1.1'
+    implementation 'com.uber.autodispose2:autodispose-android:2.1.1'
+    implementation 'com.uber.autodispose2:autodispose-androidx-lifecycle:2.1.1'
+
+    //Room数据库
+    implementation "androidx.room:room-runtime:2.5.0"
+    annotationProcessor "androidx.room:room-compiler:2.5.0"
+    implementation "androidx.room:room-ktx:2.5.0"
+    implementation("androidx.room:room-rxjava3:2.5.0")
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //其他三方库
+    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+    implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+    implementation 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
+    implementation 'com.github.DylanCaiCoding.LoadingStateView:loadingstateview:4.0.2'
+    implementation 'com.tencent:mmkv:1.2.13'
+    implementation 'io.github.clistery:bottomnavigationex-ex:2.0.0'
+    implementation 'io.github.clistery:bottomnavigationex-17x:2.0.0'
+    implementation 'org.greenrobot:eventbus:3.3.1'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.10'
+
+    implementation 'com.appsflyer:af-android-sdk:6.12.1'
+}

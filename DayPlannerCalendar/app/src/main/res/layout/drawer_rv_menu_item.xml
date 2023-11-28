@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_item"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/aciv_menu_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="26dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="@color/color_3d3d3d"
+        android:layout_marginStart="15dp"/>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

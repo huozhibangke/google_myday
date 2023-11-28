@@ -1,0 +1,82 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo1.maven.org/maven2/' }
+
+        //Anythink(Core)
+        maven {
+            url "https://anythink.jfrog.io/artifactory/android_sdk"
+        }
+        //Ironsource
+        maven {
+            url "https://android-sdk.is.com/"
+        }
+        //Pangle
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
+        //Mintegral
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea"
+        }
+        //Chartboost
+        maven {
+            url "https://cboost.jfrog.io/artifactory/helium"
+        }
+        flatDir {
+            dirs 'libs'
+        }
+
+        //Huawei
+        maven {
+            url "https://developer.huawei.com/repo/"
+        }
+
+    }
+
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo1.maven.org/maven2/' }
+        flatDir {
+            dirs 'libs'
+        }
+
+        //Anythink(Core)
+        maven {
+            url "https://anythink.jfrog.io/artifactory/android_sdk"
+        }
+        //Huawei
+        maven {
+            url "https://developer.huawei.com/repo/"
+        }
+        //Ironsource
+        maven {
+            url "https://android-sdk.is.com/"
+        }
+        //Pangle
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
+        //Mintegral
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea"
+        }
+        //Chartboost
+        maven {
+            url "https://cboost.jfrog.io/artifactory/helium"
+        }
+    }
+
+}
+rootProject.name = "MyDay"
+include ':app'
