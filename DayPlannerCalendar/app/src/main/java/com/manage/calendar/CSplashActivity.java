@@ -5,6 +5,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,7 +64,7 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
     public void initParamConfig() {
         super.initParamConfig();
         setHideTitleBar(false);
-        setTopBarView(false);
+//        setTopBarView(false);
         setloadingState(false);
     }
 
@@ -70,6 +72,7 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         isRootActivity();
         super.onCreate(savedInstanceState);
+
 
     }
 
@@ -124,11 +127,11 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
 //        setUpWebViewDefaults(mBinding.web);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBinding.web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        mBinding.web.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mBinding.web.getSettings().setUserAgentString("Mozilla/5.0 (android; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.109 Safari/537.36");
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            mBinding.web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+//        }
+//        mBinding.web.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        mBinding.web.getSettings().setUserAgentString("Mozilla/5.0 (android; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.109 Safari/537.36");
 //        mBinding.web.getSettings().setUseWideViewPort(true);
 //        mBinding.web.getSettings().setLoadWithOverviewMode(true);
         mBinding.web.getSettings().setBuiltInZoomControls(false);
@@ -143,7 +146,24 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
         mBinding.web.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url); // 根据传入的参数再去加载新的网页
+                Log.e("TAG","跳转URL......." + url);
+//                Toast.makeText(CSplashActivity.this, "跳转URL：" + url, Toast.LENGTH_SHORT).show();
+                if(url.contains("t.me/")){
+                    Message message = new Message();
+                    message.what = 2;
+                    message.obj = url;
+                    mHandler.sendMessage(message);
+                }
+//                else if(url.contains("facebook")){
+//                    //发送消息
+//                    Message message = new Message();
+//                    message.what = 0;
+//                    message.obj = url;
+//                    mHandler.sendMessage(message);
+//                }
+                else{
+                    view.loadUrl(url); // 根据传入的参数再去加载新的网页
+                }
                 return true; // 表示当前WebView可以处理打开新网页的请求，不用借助系统浏览器
             }
 
@@ -283,10 +303,11 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
 
         @JavascriptInterface
         public String postMessage(String method, String dataJson) {
+            Log.e("TAG","......postMessage:"+method);
             //根据method参数处理不同事件
             switch (method) {
                 case "login":
-                    Toast.makeText(CSplashActivity.this,"login",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CSplashActivity.this,"login",Toast.LENGTH_SHORT).show();
                     try {
                         Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
                         AppsFlyerLib.getInstance().logEvent(getApplicationContext(),
@@ -298,7 +319,7 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
 
                     break;
                 case "register":
-                    Toast.makeText(CSplashActivity.this,"register",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CSplashActivity.this,"register",Toast.LENGTH_SHORT).show();
 
                     try {
                         Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
@@ -310,7 +331,7 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
 
                     break;
                 case "firstrecharge":
-                    Toast.makeText(CSplashActivity.this,"firstrecharge",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CSplashActivity.this,"firstrecharge",Toast.LENGTH_SHORT).show();
 
                     try {
                         Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
@@ -322,7 +343,7 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
 
                     break;
                 case "recharge":
-                    Toast.makeText(CSplashActivity.this,"recharge",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CSplashActivity.this,"recharge",Toast.LENGTH_SHORT).show();
 
                     try {
                         Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
@@ -335,7 +356,7 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
                     break;
 
                 case "openWindow":
-                    Toast.makeText(CSplashActivity.this,"openWindow",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CSplashActivity.this,"openWindow",Toast.LENGTH_SHORT).show();
 
                     new Handler().postDelayed(new Runnable() {
 
@@ -343,11 +364,20 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
                         public void run() {
                             try {
                                 JSONObject jsonObject = new JSONObject(dataJson);
-                                //发送消息
-                                Message message = new Message();
-                                message.what = 0;
-                                message.obj = jsonObject.getString("url");
-                                mHandler.sendMessage(message);
+                                Log.e("TAG","openwindow......." + jsonObject.getString("url"));
+
+                                if (jsonObject.getString("url").contains("download/")){
+                                    Message message = new Message();
+                                    message.what = 0;
+                                    message.obj = jsonObject.getString("url");
+                                    mHandler.sendMessage(message);
+                                }else{
+                                    Message message = new Message();
+                                    message.what = 3;
+                                    message.obj = jsonObject.getString("url");
+                                    mHandler.sendMessage(message);
+                                }
+
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -367,17 +397,50 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
             switch (msg.what){
                 case 0:
 //                    mBinding.web.reload();
-                    mBinding.web.loadUrl(msg.obj.toString());
+//                    mBinding.web.loadUrl(msg.obj.toString());
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setData(Uri.parse(msg.obj.toString()));
+                    startActivity(intent);
                     break;
                 case 1:
                     ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams)mBinding.ivWebviewView.getLayoutParams();
                     layoutParams.setMargins(0, 0, 0, 0); // 设置左右间距为32dp
                     mBinding.ivWebviewView.setLayoutParams(layoutParams);
                     break;
+                case 2:
+                    //监听telegram
+                    if(isAppInstalled(CSplashActivity.this,"org.telegram.messenger.web")){
+                        //手机上已有当前应用
+                        Intent telegramIntent = CSplashActivity.this.getPackageManager().getLaunchIntentForPackage("org.telegram.messenger.web");
+                        if (telegramIntent != null) {
+                            telegramIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(telegramIntent);
+                        }
+                    }else{
+                        //跳转外部浏览器
+                        Intent openIntent = new Intent(Intent.ACTION_VIEW);
+                        openIntent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        openIntent.setData(Uri.parse(msg.obj.toString()));
+                        startActivity(openIntent);
+                    }
+                    break;
+                case 3:
+                    mBinding.web.loadUrl(msg.obj.toString());
+                    break;
             }
             super.handleMessage(msg);
         }
     };
+
+    private boolean isAppInstalled(Context context, String packageName) {
+        try {
+            context.getPackageManager().getApplicationInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
 
     public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
         Map<String, Object> map = new HashMap<String, Object>();
