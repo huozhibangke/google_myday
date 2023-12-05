@@ -45,7 +45,6 @@ public class MyApp extends MultiDexApplication {
         }
 
         AppsFlyerLib.getInstance().init("ewoxyEdQxYHrhU7QGHorrP", null, this);
-        AppsFlyerLib.getInstance().start(this);
         AppsFlyerLib.getInstance().setDebugLog(true);
 
         LoadingStateView.setViewDelegatePool(pool -> {

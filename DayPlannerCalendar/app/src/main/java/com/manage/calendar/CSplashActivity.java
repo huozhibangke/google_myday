@@ -29,8 +29,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.AppsFlyerLib;
+import com.appsflyer.attribution.AppsFlyerRequestListener;
 import com.manage.calendar.databinding.ActivitySplashBinding;
 import com.manage.calendar.utils.ClickDelay;
 import com.manage.calendar.widget.SPHelper;
@@ -64,7 +66,6 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
     public void initParamConfig() {
         super.initParamConfig();
         setHideTitleBar(false);
-//        setTopBarView(false);
         setloadingState(false);
     }
 
@@ -73,6 +74,19 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
         isRootActivity();
         super.onCreate(savedInstanceState);
 
+        AppsFlyerLib.getInstance().start(getApplicationContext(), "ewoxyEdQxYHrhU7QGHorrP", new AppsFlyerRequestListener() {
+            @Override
+            public void onSuccess() {
+                Log.d("TAG", "Launch sent successfully, got 200 response code from server");
+            }
+
+            @Override
+            public void onError(int i, @NonNull String s) {
+                Log.d("TAG", "Launch failed to be sent:\n" +
+                        "Error code: " + i + "\n"
+                        + "Error description: " + s);
+            }
+        });
 
     }
 
@@ -124,19 +138,8 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
             }
         });
 
-//        setUpWebViewDefaults(mBinding.web);
-
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            mBinding.web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-//        }
-//        mBinding.web.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        mBinding.web.getSettings().setUserAgentString("Mozilla/5.0 (android; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.109 Safari/537.36");
-//        mBinding.web.getSettings().setUseWideViewPort(true);
-//        mBinding.web.getSettings().setLoadWithOverviewMode(true);
         mBinding.web.getSettings().setBuiltInZoomControls(false);
         mBinding.web.getSettings().setDomStorageEnabled(true);
-//        mBinding.web.getSettings().setBlockNetworkImage(false);
         mBinding.web.requestFocusFromTouch();
 
         mBinding.web.getSettings().setJavaScriptEnabled(true);
@@ -147,21 +150,12 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.e("TAG","跳转URL......." + url);
-//                Toast.makeText(CSplashActivity.this, "跳转URL：" + url, Toast.LENGTH_SHORT).show();
                 if(url.contains("t.me/")){
                     Message message = new Message();
                     message.what = 2;
                     message.obj = url;
                     mHandler.sendMessage(message);
-                }
-//                else if(url.contains("facebook")){
-//                    //发送消息
-//                    Message message = new Message();
-//                    message.what = 0;
-//                    message.obj = url;
-//                    mHandler.sendMessage(message);
-//                }
-                else{
+                }else{
                     view.loadUrl(url); // 根据传入的参数再去加载新的网页
                 }
                 return true; // 表示当前WebView可以处理打开新网页的请求，不用借助系统浏览器
@@ -170,8 +164,6 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-//                view.loadUrl("javascript:function ganen(){ document.getElementsByTagName('meta')['viewport'].content='width=1000px,initial-scale=0.5,minimum-scale=0.2;'}");
-//                view.loadUrl("javascript:ganen();");
             }
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -181,15 +173,11 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
             }
             @Override
             public void onLoadResource(WebView view, String url) {
-                if (url.contains("nojump")){
-                    //状态码正常,显示隐私协议
-                    // "https://nojump.gilet.ceshi.in/wap.html"
-//                    Toast.makeText(CSplashActivity.this, "200", Toast.LENGTH_SHORT).show();
+                Log.e("tag"," onLoadResource="+url);
+                if (url.contains("j5qtyc.one/wap.html")){  //————————A面
                     isEnter = false;
                     startToMain();
-                }else{  //客户端监听该地址的返回，如果http状态码非200时，删除该webview的关闭按钮，并且将尺寸改为全屏展示我们的B面网址
-//                    https://jump.gilet.ceshi.in/wap.html
-//                    Toast.makeText(CSplashActivity.this, "302", Toast.LENGTH_SHORT).show();
+                }else{  //进入广告页面+——客户端监听该地址的返回，如果http状态码非200时，删除该webview的关闭按钮，并且将尺寸改为全屏展示我们的B面网址//————————B面
                     mBinding.llStartImage.setVisibility(View.GONE);
                     mHandler.sendEmptyMessage(1);
                     mBinding.loginView.setVisibility(View.VISIBLE);
@@ -222,35 +210,6 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
     public void onInitData() {
     }
 
-//    private void tipDialog() {
-//        if (mDialog == null) {
-//            mDialog = DialogUtils.createDialog(this, R.layout.splash_tip_dialog, 0.8f, 0f, Gravity.CENTER);
-//            TextView ok = mDialog.findViewById(R.id.tv_ok);
-//            TextView refuse = mDialog.findViewById(R.id.tv_refuse);
-//            TextView cntent = mDialog.findViewById(R.id.actv_premission_content);
-//            cntent.setMovementMethod(ScrollingMovementMethod.getInstance());
-//            ok.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(ClickDelay.isFastClick()){
-//                        isFirst = true;
-//                        SPHelper.getInstance().setBoolean(Constant.APP_START, isFirst);
-//                        startToMain();
-//                    }
-//                }
-//            });
-//
-//            refuse.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mDialog.dismiss();
-//                }
-//            });
-//        }
-//
-//        mDialog.show();
-//
-//    }
     private CountDownTimer timer;
     private void startToMain() {
         timer = new CountDownTimer(2000, 100) {
@@ -307,11 +266,24 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
             //根据method参数处理不同事件
             switch (method) {
                 case "login":
-//                    Toast.makeText(CSplashActivity.this,"login",Toast.LENGTH_SHORT).show();
                     try {
-                        Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
+                        JSONObject loginJson = new JSONObject(dataJson);
+                        Map<String, Object> loginMap = new HashMap<String, Object>();
+                        loginMap.put("success", loginJson.getInt("success"));
+                        Log.d("TAG", "login--------:" + loginMap.toString());
                         AppsFlyerLib.getInstance().logEvent(getApplicationContext(),
-                                "login", map);
+                                "login", loginMap,new AppsFlyerRequestListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d("TAG", "Event sent successfully");
+                                    }
+                                    @Override
+                                    public void onError(int i, @NonNull String s) {
+                                        Log.d("TAG", "Event failed to be sent:\n" +
+                                                "Error code: " + i + "\n"
+                                                + "Error description: " + s);
+                                    }
+                                });
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -319,36 +291,79 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
 
                     break;
                 case "register":
-//                    Toast.makeText(CSplashActivity.this,"register",Toast.LENGTH_SHORT).show();
-
                     try {
-                        Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
+                        JSONObject registerJson = new JSONObject(dataJson);
+                        Map<String, Object> registerMap = new HashMap<String, Object>();
+                        registerMap.put("success", registerJson.getInt("success"));
+                        Log.d("TAG", "register--------:" + registerMap.toString());
                         AppsFlyerLib.getInstance().logEvent(getApplicationContext(),
-                                "register", map);
+                                "register", registerMap,new AppsFlyerRequestListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d("TAG", "Event sent successfully");
+                                    }
+                                    @Override
+                                    public void onError(int i, @NonNull String s) {
+                                        Log.d("TAG", "Event failed to be sent:\n" +
+                                                "Error code: " + i + "\n"
+                                                + "Error description: " + s);
+                                    }
+                                });
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
 
                     break;
                 case "firstrecharge":
-//                    Toast.makeText(CSplashActivity.this,"firstrecharge",Toast.LENGTH_SHORT).show();
-
                     try {
-                        Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
+                        JSONObject firstrechargeJson = new JSONObject(dataJson);
+                        Map<String, Object> firstrechargeMap = new HashMap<String, Object>();
+                        firstrechargeMap.put("success", firstrechargeJson.getInt("success"));
+                        firstrechargeMap.put("isFirst", firstrechargeJson.getInt("isFirst"));
+                        firstrechargeMap.put("af_revenue", firstrechargeJson.getString("amount"));
+                        firstrechargeMap.put("currency", firstrechargeJson.getString("currency"));
+                        Log.d("TAG", dataJson.toString()+"firstrecharge--------:" + firstrechargeMap.toString());
+                        Log.d("TAG", "firstrecharge0000000000000--------:" + jsonToMap(new JSONObject(dataJson)).toString());
                         AppsFlyerLib.getInstance().logEvent(getApplicationContext(),
-                                "firstrecharge", map);
+                                "firstrecharge", firstrechargeMap,new AppsFlyerRequestListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d("TAG", "Event sent successfully");
+                                    }
+                                    @Override
+                                    public void onError(int i, @NonNull String s) {
+                                        Log.d("TAG", "Event failed to be sent:\n" +
+                                                "Error code: " + i + "\n"
+                                                + "Error description: " + s);
+                                    }
+                                });
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
 
                     break;
                 case "recharge":
-//                    Toast.makeText(CSplashActivity.this,"recharge",Toast.LENGTH_SHORT).show();
-
                     try {
-                        Map<String, Object> map = jsonToMap(new JSONObject(dataJson));
+                        JSONObject rechargeJson = new JSONObject(dataJson);
+                        Map<String, Object> rechargeMap = new HashMap<String, Object>();
+                        rechargeMap.put("success", rechargeJson.getInt("success"));
+                        rechargeMap.put("isFirst", rechargeJson.getInt("isFirst"));
+                        rechargeMap.put("af_revenue", rechargeJson.getString("amount"));
+                        rechargeMap.put("currency", rechargeJson.getString("currency"));
+                        Log.d("TAG", "recharge--------:" + rechargeMap.toString());
                         AppsFlyerLib.getInstance().logEvent(getApplicationContext(),
-                                "recharge", map);
+                                "recharge", rechargeMap,new AppsFlyerRequestListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d("TAG", "Event sent successfully");
+                                    }
+                                    @Override
+                                    public void onError(int i, @NonNull String s) {
+                                        Log.d("TAG", "Event failed to be sent:\n" +
+                                                "Error code: " + i + "\n"
+                                                + "Error description: " + s);
+                                    }
+                                });
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -356,8 +371,6 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
                     break;
 
                 case "openWindow":
-//                    Toast.makeText(CSplashActivity.this,"openWindow",Toast.LENGTH_SHORT).show();
-
                     new Handler().postDelayed(new Runnable() {
 
                         @Override
@@ -396,8 +409,6 @@ public class CSplashActivity extends BaseActivity<ActivitySplashBinding> impleme
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 case 0:
-//                    mBinding.web.reload();
-//                    mBinding.web.loadUrl(msg.obj.toString());
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addCategory(Intent.CATEGORY_BROWSABLE);
                     intent.setData(Uri.parse(msg.obj.toString()));
