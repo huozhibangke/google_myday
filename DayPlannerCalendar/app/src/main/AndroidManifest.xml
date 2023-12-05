@@ -68,8 +68,6 @@
             android:exported="true"/>
         <activity android:name="com.manage.calendar.sys.SetLanguageActivity"
             android:exported="true"/>
-        <activity android:name="com.manage.calendar.sys.AppManagerActivity"
-            android:exported="true"/>
         <activity android:name="com.manage.calendar.sys.SuggestionActivity"
             android:exported="true"/>
         <activity android:name="com.manage.calendar.sys.PrivacyActivity"

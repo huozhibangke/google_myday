@@ -50,13 +50,13 @@ android {
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'agreementPrivacy', '"https://docs.google.com/document/d/1BkWeec8YPPqpP-2Z2udjyWINzye9KkkRYPB0gOxjk3Q/edit?usp=sharing"')
+            buildConfigField('String', 'agreementPrivacy', '"https://docs.google.com/document/d/e/2PACX-1vQeaAAbeaggzcOyWeJB75HVr8AqggPWSmulMUL767k7aBHV_uOBIhqJpTdLgUMWBeNf3D7pT1x-9mBh/pub"')
             signingConfig signingConfigs.calendar
         }
         debug{
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'agreementPrivacy', '"https://docs.google.com/document/d/1BkWeec8YPPqpP-2Z2udjyWINzye9KkkRYPB0gOxjk3Q/edit?usp=sharing"')
+            buildConfigField('String', 'agreementPrivacy', '"https://docs.google.com/document/d/e/2PACX-1vQeaAAbeaggzcOyWeJB75HVr8AqggPWSmulMUL767k7aBHV_uOBIhqJpTdLgUMWBeNf3D7pT1x-9mBh/pub"')
         }
 
     }

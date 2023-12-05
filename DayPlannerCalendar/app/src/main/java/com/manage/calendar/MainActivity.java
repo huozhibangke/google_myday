@@ -32,7 +32,6 @@ import com.manage.calendar.calendar.CalendarEvent;
 import com.manage.calendar.calendar.CalendarProviderManager;
 import com.manage.calendar.databinding.ActivityMainBinding;
 import com.manage.calendar.home.CurrentDayTaskActivity;
-import com.manage.calendar.sys.AppManagerActivity;
 import com.manage.calendar.sys.PrivacyActivity;
 import com.manage.calendar.sys.SetLanguageActivity;
 import com.manage.calendar.sys.SuggestionActivity;
@@ -371,11 +370,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 startActivity(intent);
                 break;
             case 2:
-                Intent apps = new Intent(mContext, AppManagerActivity.class);
-                startActivity(apps);
-
-                break;
-            case 3:
                 try {
                     Intent size = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
                     startActivity(size);
@@ -383,12 +377,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                     e.printStackTrace();
                 }
                 break;
-            case 4:
+            case 3:
                 Intent su = new Intent(mContext, SuggestionActivity.class);
                 startActivity(su);
 
                 break;
-            case 5:
+            case 4:
                 Intent privacy = new Intent(mContext, PrivacyActivity.class);
                 startActivity(privacy);
                 break;
@@ -402,10 +396,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 //        list.add(new DrawerBean(R.drawable.ic_menu_manager_activies, getString(R.string.menu_manager_activies), 1));
 //        list.add(new DrawerBean(R.drawable.ic_menu_schedule_tip, getString(R.string.menu_schedule_tip), 2));
         list.add(new DrawerBean(R.drawable.ic_menu_language, getString(R.string.menu_language), 1));
-        list.add(new DrawerBean(R.drawable.ic_soft_manager, getString(R.string.menu_soft_manager), 2));
-        list.add(new DrawerBean(R.drawable.ic_menu_font, getString(R.string.menu_font), 3));
-        list.add(new DrawerBean(R.drawable.ic_menu_su_fd, getString(R.string.menu_feedback), 4));
-        list.add(new DrawerBean(R.drawable.ic_menu_privacy, getString(R.string.menu_privacy), 5));
+        list.add(new DrawerBean(R.drawable.ic_menu_font, getString(R.string.menu_font), 2));
+        list.add(new DrawerBean(R.drawable.ic_menu_su_fd, getString(R.string.menu_feedback), 3));
+        list.add(new DrawerBean(R.drawable.ic_menu_privacy, getString(R.string.menu_privacy), 4));
         return list;
     }
 
